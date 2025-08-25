@@ -1,169 +1,125 @@
+Professional AI Development Prompt
 
- i wish to create a user profile that spans the normal one with a very nice dashboard and i need sources as well as prompts to help in my journey of making professional and industry specific profile pages. i wish to use TypeScript with Tailwind CSS as well as use react-router for inrouting using Mostly Link as well i want to highly visual dashboard
+I need a production-grade User Profile & Analytics Dashboard SaaS application called "ProfilePro" that solves the problem of fragmented user identity and engagement tracking for SaaS platforms, content creators, and professional freelancers.
 
- import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import DashboardLayout from './components/layout/DashboardLayout';
-import ProfilePage from './pages/ProfilePage';
-import AnalyticsPage from './pages/AnalyticsPage';
-import SettingsPage from './pages/SettingsPage';
+The core value proposition is: To provide a centralized, white-labelable dashboard that users can embed in any service, offering them a unified view of their profile, performance metrics, and engagement data across platforms, thereby increasing user retention and satisfaction.
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<DashboardLayout />}>
-          <Route index element={<ProfilePage />} />
-          <Route path="analytics" element={<AnalyticsPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-        </Route>
-      </Routes>
-    </Router>
-  );
-}
+Technical Stack
 
-export default App;
+    Frontend: React 18 with TypeScript, styled with Tailwind CSS
 
-// DashboardLayout.tsx
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import Navbar from './Navbar';
+    Routing: React Router v6 (using Link for navigation)
 
-const DashboardLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  
-  return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
-      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
-      
-      <div className="flex flex-col flex-1">
-        <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-        
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          <Outlet /> {/* This is where page content will render */}
-        </main>
-      </div>
-    </div>
-  );
-};
+    Backend: Mocked initially with json-server or miragejs, architected for Node.js (Express) or Next.js API routes
 
-export default DashboardLayout;
+    Database: Schema designed for PostgreSQL with Prisma ORM
 
-// ProfilePage.tsx
-import { useState } from 'react';
-import UserCard from '../components/profile/UserCard';
-import StatsGrid from '../components/dashboard/StatsGrid';
-import ActivityFeed from '../components/activity/ActivityFeed';
-import ProgressChart from '../components/charts/ProgressChart';
+    Authentication: Mocked auth context, designed for integration with Next-Auth or Auth0
 
-const ProfilePage = () => {
-  const [userData] = useState({
-    name: 'Jane Cooper',
-    title: 'Frontend Developer',
-    avatar: '/path/to/avatar.jpg',
-    coverPhoto: '/path/to/cover.jpg',
-    stats: [
-      { label: 'Projects', value: 24 },
-      { label: 'Followers', value: 1284 },
-      { label: 'Following', value: 362 },
-    ]
-  });
+    Additional: Recharts or ApexCharts for data visualization, react-hook-form for forms, framer-motion for subtle animations, and react-aria for accessibility primitives.
 
-  return (
-    <div className="space-y-6">
-      {/* Header with cover photo and avatar */}
-      <div className="relative h-48 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl overflow-hidden">
-        <div className="absolute bottom-0 left-6 transform translate-y-1/2">
-          <img 
-            src={userData.avatar} 
-            alt={userData.name}
-            className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800 shadow-lg"
-          />
-        </div>
-      </div>
+Core Features (in priority order)
 
-      {/* Profile content grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-16">
-        <div className="lg:col-span-2">
-          <UserCard user={userData} />
-          <ActivityFeed userId={123} />
-        </div>
-        
-        <div className="space-y-6">
-          <StatsGrid stats={userData.stats} />
-          <ProgressChart />
-        </div>
-      </div>
-    </div>
-  );
-};
+    Modular Dashboard Overview: A highly visual, at-a-glance summary of the user's key metrics.
 
-export default ProfilePage;
+        Drag-and-drop widget rearrangement for personalized layouts
 
-// ThemeContext.tsx
-import React, { createContext, useContext, useEffect, useState } from 'react';
+        Performance-optimized widget rendering (memoization, virtual scrolling)
 
-type ThemeContextType = {
-  isDark: boolean;
-  toggleTheme: () => void;
-};
+        Real-time data updates on key metrics (using WebSocket-ready architecture)
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+    Unified User Profile Management: A single source of truth for a user's professional identity.
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isDark, setIsDark] = useState(false);
+        Rich text bio with @mention support
 
-  useEffect(() => {
-    // Check for saved theme preference or use system preference
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    setIsDark(savedTheme ? savedTheme === 'dark' : systemPrefersDark);
-  }, []);
+        Skills/Endorsements system with tag management
 
-  useEffect(() => {
-    // Apply theme class to document
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    
-    // Save preference
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }, [isDark]);
+        File upload for avatar, cover photo, and documents with compression and CDN-ready structure
 
-  const toggleTheme = () => setIsDark(!isDark);
+        Public/private visibility controls for each profile section
 
-  return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
+    Cross-Platform Analytics Hub: Visualizes user engagement data from integrated services.
 
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-};
+        Multi-variant chart types (line, bar, pie) with accessible descriptions (aria-label)
 
-// GlassCard.tsx
-import React from 'react';
+        Date range picker for custom analysis periods
 
-interface GlassCardProps {
-  children: React.ReactNode;
-  className?: string;
-}
+        Data export functionality (CSV, JSON)
 
-const GlassCard: React.FC<GlassCardProps> = ({ children, className = '' }) => {
-  return (
-    <div className={`rounded-xl border border-white/20 bg-white/20 dark:border-gray-600/30 dark:bg-gray-600/20 backdrop-blur-xl ${className}`}>
-      {children}
-    </div>
-  );
-};
+        Custom metric definition for power users
 
-export default GlassCard;
+Features explicitly OUT of scope:
+
+    Built-in payment processing integration (will be mocked)
+
+    Actual third-party API integrations (data will be mocked with realistic shapes)
+
+    Native mobile application (focus is on a responsive PWA)
+
+UI/UX Requirements
+
+    Design Style: Modern "Glassmorphism" with a clean, professional aesthetic. Use backdrop filters sparingly on key components like cards and the nav bar.
+
+    Color Scheme: Primary blue (#3B82F6), with a complementary palette from Tailwind's default spectrum. Must include a fully functional, system-aware dark/light mode toggle.
+
+    Responsive Design: Mobile-first approach. The sidebar must collapse into a hamburger menu on small screens. All data visualizations must remain readable and interactive on mobile via responsive chart libraries.
+
+Data Model
+
+    User:
+
+        Fields: id (string), email (string), name (string), username (string), avatarUrl (string), coverUrl (string), bio (string), createdAt (DateTime)
+
+        Relationships: hasMany(ProfileView), hasMany(Skill), hasMany(Activity)
+
+    ProfileView:
+
+        Fields: id (string), viewedAt (DateTime), viewerId (string - nullable)
+
+        Relationships: belongsTo(User)
+
+    Skill:
+
+        Fields: id (string), name (string), endorsementCount (int)
+
+        Relationships: belongsTo(User)
+
+Authentication and Authorization
+
+    Provider: Context API for mock auth, designed for Next-Auth or Auth0.
+
+    Roles: Single user role for this MVP, with data ownership checks (users can only see their own data).
+
+    Security: All API calls must check for a valid mock user session. Password hashing is out of scope for the mock phase.
+
+Payment Integration (if applicable)
+
+    Provider: Stripe (to be integrated in a future phase, not now).
+
+    Plans: Free (basic analytics), Pro ($9/mo - advanced metrics, white-labeling), Enterprise (custom).
+
+Development Approach
+
+    Start with: Setting up the Vite + React + TypeScript + Tailwind project with absolute imports, path aliasing, and a robust folder structure.
+
+    Build incrementally:
+
+        Project boilerplate and mock auth context.
+
+        Responsive dashboard layout component (sidebar, navbar, main content area).
+
+        Static User Profile page.
+
+        Interactive Dashboard overview with mock data widgets.
+
+        Analytics page with static charts.
+
+        Implement interactivity: theme toggle, widget dragging, chart filters.
+
+    Prioritize:
+
+        Performance: Lighthouse CI checks. Focus on Largest Contentful Paint (LCP) and Cumulative Layout Shift (CLS). Use lazy loading for dashboard sections and images.
+
+        Accessibility: Full WCAG AA compliance. Keyboard navigation, screen reader announcements, correct ARIA attributes on all interactive elements (charts, forms, buttons), and high color contrast ratios in both themes.
+
+        Code Quality: Enforced via ESLint and Prettier. All components must be typed with TypeScript. Reusable logic must be abstracted into custom hooks.
