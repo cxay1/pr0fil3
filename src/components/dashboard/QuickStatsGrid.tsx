@@ -30,7 +30,7 @@ const QuickStatsGrid: React.FC = () => {
       change: {
         value: Math.round(viewsChange),
         label: 'vs last week',
-        trend: viewsChange >= 0 ? 'up' : 'down' as const,
+        trend: (viewsChange >= 0 ? 'up' : 'down') as 'up' | 'down',
       },
       icon: Eye,
       color: 'blue' as const,
@@ -41,7 +41,7 @@ const QuickStatsGrid: React.FC = () => {
       change: {
         value: 12,
         label: 'this month',
-        trend: 'up' as const,
+        trend: 'up' as 'up' | 'down',
       },
       icon: ThumbsUp,
       color: 'green' as const,
@@ -58,7 +58,7 @@ const QuickStatsGrid: React.FC = () => {
       change: {
         value: 8,
         label: 'this week',
-        trend: 'up' as const,
+        trend: 'up' as 'up' | 'down',
       },
       icon: Users,
       color: 'orange' as const,
@@ -67,7 +67,7 @@ const QuickStatsGrid: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {stats.map((stat, index) => (
+      {stats.map((stat) => (
         <MetricCard
           key={stat.title}
           title={stat.title}

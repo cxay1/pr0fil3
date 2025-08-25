@@ -11,7 +11,7 @@ import {
   ChevronLeft,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import { NavigationItem } from '../../types';
+import type { NavigationItem } from '../../types';
 import Card from '../ui/Card';
 
 interface SidebarProps {
@@ -40,11 +40,11 @@ const Sidebar: React.FC<SidebarProps> = ({
   const sidebarVariants = {
     open: {
       x: 0,
-      transition: { type: 'spring', stiffness: 300, damping: 30 }
+      transition: { type: 'spring' as const, stiffness: 300, damping: 30 }
     },
     closed: {
       x: '-100%',
-      transition: { type: 'spring', stiffness: 300, damping: 30 }
+      transition: { type: 'spring' as const, stiffness: 300, damping: 30 }
     }
   };
 
@@ -165,8 +165,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   }}
                 >
                   <item.icon
-                    size={20}
-                    className={`${isCollapsed ? 'mx-auto' : 'mr-3'} ${
+                    className={`w-5 h-5 ${isCollapsed ? 'mx-auto' : 'mr-3'} ${
                       isActive ? 'text-primary-600 dark:text-primary-400' : ''
                     }`}
                   />
@@ -194,7 +193,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               onClick={logout}
               className="flex items-center w-full px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 rounded-lg transition-all duration-200"
             >
-              <LogOut size={20} className={isCollapsed ? 'mx-auto' : 'mr-3'} />
+              <LogOut className={`w-5 h-5 ${isCollapsed ? 'mx-auto' : 'mr-3'}`} />
               {!isCollapsed && <span className="font-medium">Logout</span>}
             </button>
           </div>

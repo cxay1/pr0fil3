@@ -6,7 +6,6 @@ import {
   Search,
   Sun,
   Moon,
-  Monitor,
 } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';

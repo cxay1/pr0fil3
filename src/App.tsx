@@ -10,11 +10,7 @@ import SettingsPage from './pages/SettingsPage';
 import LoginPage from './pages/LoginPage';
 import Toast from './components/ui/Toast';
 
-// Protected Route Component
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
-};
+// Remove unused ProtectedRoute component since we handle auth in AppContent
 
 // App Content Component (needs to be inside AuthProvider to use useAuth)
 const AppContent: React.FC = () => {
