@@ -10,11 +10,11 @@ Technical Stack
 
     Routing: React Router v6 (using Link for navigation)
 
-    Backend: Mocked initially with json-server or miragejs, architected for Node.js (Express) or Next.js API routes
+    Backend: Mocked for Node.js (Express) API routes
 
-    Database: Schema designed for PostgreSQL with Prisma ORM
+    Database: Telegram API for sending messages and handles the databse.
 
-    Authentication: Mocked auth context, designed for integration with Next-Auth or Auth0
+    Authentication: Mocked auth context, designed for integration with Auth0
 
     Additional: Recharts or ApexCharts for data visualization, react-hook-form for forms, framer-motion for subtle animations, and react-aria for accessibility primitives.
 
@@ -94,7 +94,7 @@ Authentication and Authorization
 
 Payment Integration (if applicable)
 
-    Provider: Stripe (to be integrated in a future phase, not now).
+    Provider: Stripe
 
     Plans: Free (basic analytics), Pro ($9/mo - advanced metrics, white-labeling), Enterprise (custom).
 
