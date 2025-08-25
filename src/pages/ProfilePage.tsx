@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ProfileHeader from '../components/profile/ProfileHeader';
-import SkillsSection from '../components/profile/SkillsSection';
+import InteractiveSkillsSection from '../components/profile/InteractiveSkillsSection';
 import ActivityFeed from '../components/profile/ActivityFeed';
 
 const ProfilePage: React.FC = () => {
@@ -28,7 +28,7 @@ const ProfilePage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column - Skills */}
         <div className="lg:col-span-2">
-          <SkillsSection />
+          <InteractiveSkillsSection />
         </div>
 
         {/* Right Column - Activity Feed */}

@@ -70,9 +70,12 @@ export interface ThemeContextType {
 export interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading?: boolean;
   login: (email: string, password: string) => Promise<void>;
+  register?: (userData: { email: string; password: string; name: string; username: string }) => Promise<void>;
   logout: () => void;
   updateProfile: (updates: Partial<User>) => Promise<void>;
+  refreshUserData?: () => Promise<void>;
 }
 
 export type NavigationItem = {
